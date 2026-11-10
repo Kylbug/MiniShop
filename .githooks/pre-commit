@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "Build wird ausgefuehrt..."
+
+dotnet build src/MiniShop --nologo -v q
+
+if [ $? -ne 0 ]; then
+    echo "Der Build hat nicht funktioniert."
+    exit 1
+fi
+
+echo "Tests werden ausgefuehrt..."
+
+dotnet test src/MiniShop --nologo -v q --no-build --filter "Category!=System"
+
+if [ $? -ne 0 ]; then
+    echo "Die Tests haben nicht funktioniert."
+    exit 1
+fi
+
+echo "Build und Tests waren erfolgreich."

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MiniShop.Tests/MiniShop.Tests.csproj" />
+  <Project Path="ShopMonolith/ShopMonolith.csproj" />
+</Solution>

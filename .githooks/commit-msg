@@ -1,0 +1,5 @@
+#!/bin/sh
+if ! grep -qE "#[0-9]+" "$1"; then
+  echo "Commit abgelehnt: Die Nachricht braucht eine Issue-Nummer, z.B. \"#3 Bestellung aufgeben\"."
+  exit 1
+fi

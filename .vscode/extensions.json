@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csdevkit",
+    "ms-azuretools.vscode-containers",
+    "github.vscode-pull-request-github",
+    "github.vscode-github-actions"
+  ]
+}
