@@ -50,7 +50,7 @@ public class DeliveryStoreTests
 
         var delivery = store.CreateDelivery(Guid.NewGuid());
 
-        Assert.Equal("needs packing", delivery.Status);
+        Assert.Equal("muss eingepackt werden", delivery.Status);
         Assert.Single(store.GetAll());
     }
 }
