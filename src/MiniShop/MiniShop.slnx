@@ -1,4 +1,6 @@
 <Solution>
+  <Project Path="DeliveryService/DeliveryService.csproj" />
+  <Project Path="Gateway/Gateway.csproj" />
   <Project Path="MiniShop.Tests/MiniShop.Tests.csproj" />
   <Project Path="ShopMonolith/ShopMonolith.csproj" />
 </Solution>

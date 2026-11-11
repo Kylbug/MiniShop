@@ -39,17 +39,18 @@ public class ShopTests
 
         Assert.Equal(order, found);
     }
-
+}
+public class DeliveryStoreTests
+{
     [Fact]
     [Trait("Issue", "3")]
-    public void CreateDeliveryForValidOrder()
+    public void CheckStatusForNewDelivery()
     {
-        var shop = new Shop();
+        var store = new DeliveryStore();
 
-        var order = shop.PlaceOrder(new NewOrder("Pralinen", 1))!;
+        var delivery = store.CreateDelivery(Guid.NewGuid());
 
-        var delivery = Assert.Single(shop.Deliveries);
-        Assert.Equal(order.Id, delivery.OrderId);
         Assert.Equal("needs packing", delivery.Status);
+        Assert.Single(store.GetAll());
     }
 }
