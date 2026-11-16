@@ -1,0 +1,44 @@
+openapi: 3.0.3
+info:
+  title: MiniShop Bestellungen
+  version: 1.0.0
+paths:
+  /orders/place-order:
+    post:
+      summary: "Command: Bestellung aufgeben (braucht API-Key)"
+      parameters:
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PlaceOrderDTO' }
+      responses:
+        '201': { description: Bestellung erstellt }
+        '401': { description: API-Key fehlt oder ist falsch }
+  /orders:
+    get:
+      summary: "Query: Alle Bestellungen lesen"
+      responses:
+        '200': { description: Liste der Bestellungen }
+  /orders/{id}:
+    get:
+      summary: "Query: Eine Bestellung lesen"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Die Bestellung }
+        '404': { description: Bestellung nicht gefunden }
+components:
+  schemas:
+    PlaceOrderDTO:
+      type: object
+      properties:
+        product: { type: string }
+        quantity: { type: integer }
