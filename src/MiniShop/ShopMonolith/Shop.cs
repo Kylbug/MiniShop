@@ -31,4 +31,5 @@ public class Shop
 
     //Bestellung anzeigen
     public Order? GetOrder(Guid id) => orders.FirstOrDefault(o => o.Id == id);
+    public List<Order> GetOrders() => orders.ToList();
 }

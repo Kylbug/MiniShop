@@ -1,4 +1,4 @@
-
+using Microsoft.AspNetCore.Mvc;
 using ShopMonolith;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,9 +13,18 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
-// Bestellung aufgeben
-app.MapPost("/orders", async (NewOrder input, Shop shop, IHttpClientFactory httpClientFactory) =>
+var orders = app.MapGroup("/orders");
+
+orders.MapPost("/place-order", async (
+    [FromHeader(Name = "X-Api-Key")] string? apiKey,
+    NewOrder input,
+    Shop shop,
+    IConfiguration config,
+    IHttpClientFactory httpClientFactory) =>
 {
+    if (apiKey != config["ApiKey"])
+        return Results.Unauthorized();
+
     var order = shop.PlaceOrder(input);
 
     if (order is null)
@@ -27,11 +36,9 @@ app.MapPost("/orders", async (NewOrder input, Shop shop, IHttpClientFactory http
     return Results.Created($"/orders/{order.Id}", order);
 });
 
-// Alle Bestellungen anzeigen
-app.MapGet("/orders", (Shop shop) => shop.Orders);
+orders.MapGet("/", (Shop shop) => shop.Orders);
 
-// Spezifische Bestellung anzeigen
-app.MapGet("/orders/{id}", (Guid id, Shop shop) =>
+orders.MapGet("/{id}", (Guid id, Shop shop) =>
 {
     var order = shop.GetOrder(id);
     return order is null ? Results.NotFound() : Results.Ok(order);
